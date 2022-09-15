@@ -421,7 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curScene:
     m_Handle: 0
-  loadingCanvas: {fileID: 0}
+  loadingCanvas: {fileID: 4540337000351797551, guid: 9970e63394aba47d2a3c659e7eb406b0, type: 3}
 --- !u!4 &1817341817
 Transform:
   m_ObjectHideFlags: 0
