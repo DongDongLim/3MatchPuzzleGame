@@ -78,3 +78,15 @@ Assets/GooglePlayGames/
 Assets/GooglePlayGames.meta
 Assets/Plugins/
 Assets/Plugins.meta
+Assets/GoogleService-Info.plist
+Assets/GoogleService-Info.plist.meta
+Assets/google-services.json
+Assets/google-services.json.meta
+Assets/Editor\ Default\ Resources/
+Assets/Editor\ Default\ Resources.meta
+Assets/Firebase/
+Assets/Firebase.meta
+Assets/Parse/
+Assets/Parse.meta
+Assets/StreamingAssets/
+Assets/StreamingAssets.meta
