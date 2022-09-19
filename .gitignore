@@ -72,3 +72,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 KeyStore/
+Assets/ExternalDependencyManager/
+Assets/ExternalDependencyManager.meta
+Assets/GooglePlayGames/
+Assets/GooglePlayGames.meta
+Assets/Plugins/
+Assets/Plugins.meta
