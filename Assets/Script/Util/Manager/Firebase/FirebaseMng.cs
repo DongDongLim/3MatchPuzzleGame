@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Auth;
-using System.Threading.Tasks;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
 
 public class FirebaseMng : Singleton<FirebaseMng>
 {
-    [SerializeField]
-    GameObject sussessBtn;
-
-    [SerializeField]
-    GameObject failsBtn;
 
     private FirebaseAuth m_Auth;
 
@@ -27,10 +19,8 @@ public class FirebaseMng : Singleton<FirebaseMng>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
-                failsBtn.SetActive(true);
                 return;
             }
-            sussessBtn.SetActive(true);
 
             FirebaseUser newUser = task.Result;
             FirebaseUser user = m_Auth.CurrentUser;

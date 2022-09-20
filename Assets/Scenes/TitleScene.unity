@@ -1399,6 +1399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802647073}
   - component: {fileID: 1802647074}
+  - component: {fileID: 1802647075}
   m_Layer: 5
   m_Name: FirebaseMng
   m_TagString: Untagged
@@ -1441,8 +1442,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0677f6df77e69492aa63c09f8d334161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sussessBtn: {fileID: 1140552318}
-  failsBtn: {fileID: 23407712}
+--- !u!114 &1802647075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802647072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496eac5c7e53640589f6aaf58356f0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SignInBtn: {fileID: 2003936171}
 --- !u!1 &1817341815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,7 +1722,6 @@ GameObject:
   - component: {fileID: 2003936175}
   - component: {fileID: 2003936174}
   - component: {fileID: 2003936173}
-  - component: {fileID: 2003936176}
   m_Layer: 5
   m_Name: GoogleLogInBtn
   m_TagString: Untagged
@@ -1783,9 +1794,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2003936176}
+      - m_Target: {fileID: 1802647075}
         m_TargetAssemblyTypeName: GoogleLogIn, Assembly-CSharp
-        m_MethodName: LogInBtn
+        m_MethodName: SignIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1833,20 +1844,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003936171}
   m_CullTransparentMesh: 1
---- !u!114 &2003936176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003936171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496eac5c7e53640589f6aaf58356f0bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sussessBtn: {fileID: 717142391}
-  failsBtn: {fileID: 961510126}
 --- !u!1 &2018783394
 GameObject:
   m_ObjectHideFlags: 0

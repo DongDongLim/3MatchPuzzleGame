@@ -4,17 +4,14 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 
-public class GoogleLogIn : MonoBehaviour
+public class GoogleLogIn : MonoBehaviour, ISignIn
 {
     [SerializeField]
-    GameObject sussessBtn;
+    GameObject m_SignInBtn;
 
-    [SerializeField]
-    GameObject failsBtn;
-
-
-    public void LogInBtn()
+    public void SignIn()
     {
+        // 로그인 결과 받아오기
         PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
 
@@ -29,14 +26,19 @@ public class GoogleLogIn : MonoBehaviour
             false,
             FirebaseMng.instance.SignIn
             );
-            sussessBtn.SetActive(true);
         }
         else
         {
-            failsBtn.SetActive(true);
+            ReSignIn();
             // Disable your integration with Play Games Services or show a login button
             // to ask users to sign-in. Clicking it should call
             // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
         }
+    }
+
+    // 다시 로그인 시도
+    public void ReSignIn()
+    {
+        PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
     }
 }
