@@ -4,10 +4,45 @@ using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
 using System;
+using UnityEngine.SceneManagement;// Todo : 추후 싱글톤화된 씬매니저로 변경
 
 // 네트워크와 상호 작용하기 위한 인터페이스 상속
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
+    [SerializeField]
+    private NetworkRunner _runner;
+
+    private void OnGUI()
+    {
+        if (_runner == null)
+        {
+            if (GUI.Button(new Rect(500, 160, 400, 160), "Host"))
+            {
+                StartGame(GameMode.Host);
+            }
+            if (GUI.Button(new Rect(500, 360, 400, 160), "Join"))
+            {
+                StartGame(GameMode.Client);
+            }
+        }
+    }
+
+    async void StartGame(GameMode mode)
+    {
+        _runner = gameObject.AddComponent<NetworkRunner>();
+        _runner.ProvideInput = true;
+
+        await _runner.StartGame(new StartGameArgs()
+        {
+            GameMode = mode,
+            SessionName = "TestRoom",
+            Scene = SceneManager.GetActiveScene().buildIndex,
+            SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+
+        });
+    }
+
+
     public void OnConnectedToServer(NetworkRunner runner)
     {
 
