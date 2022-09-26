@@ -24,11 +24,29 @@ public class SceneMng : Singleton<SceneMng>
     [SerializeField]
     GameObject loadingCanvas;
 
+    GameObject loading;
+
     protected override void Awake()
     {
         base.Awake();
         // 현재 씬 받아오기
         curScene = SceneManager.GetActiveScene();
+        loading = Instantiate(loadingCanvas, transform, false);
+        DeActiveLoadingScene(null);
+        SceneExit = ActiveLoadingScene;
+        SceneEnter = DeActiveLoadingScene;
+
+
+    }
+
+    void ActiveLoadingScene(string sceneName_Null)
+    {
+        loading.SetActive(true);
+    }
+
+    void DeActiveLoadingScene(string sceneName_Null)
+    {
+        loading.SetActive(false);
     }
 
     public void SceneChange(string sceneName)
