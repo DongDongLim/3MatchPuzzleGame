@@ -1,12 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class SceneMng : Singleton<SceneMng>
+public enum MapIndex
+{
+    Title,
+    Lobby,
+    Game,
+};
+
+public class SceneMng : NetworkSceneManagerBase
 {
     IEnumerator iter;
+
+    // 로딩 캔버스
+    [SerializeField]
+    private GameObject loadingCanvas;
 
     // 씬 Enter 이벤트
     public UnityAction<string> SceneEnter;
@@ -20,19 +32,17 @@ public class SceneMng : Singleton<SceneMng>
     // 현재 씬
     public Scene curScene;
 
-    // 로딩 캔버스
-    [SerializeField]
-    GameObject loadingCanvas;
 
-    GameObject loading;
+    [Header("Scenes")]
+    [SerializeField] private SceneReference _lobby;
+    [SerializeField] private SceneReference _game;
 
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         // 현재 씬 받아오기
         curScene = SceneManager.GetActiveScene();
-        loading = Instantiate(loadingCanvas, transform, false);
+        
         DeActiveLoadingScene(null);
         SceneExit = ActiveLoadingScene;
         SceneEnter = DeActiveLoadingScene;
@@ -46,12 +56,12 @@ public class SceneMng : Singleton<SceneMng>
 
     void ActiveLoadingScene(string sceneName_Null)
     {
-        loading.SetActive(true);
+        loadingCanvas.SetActive(true);
     }
 
     void DeActiveLoadingScene(string sceneName_Null)
     {
-        loading.SetActive(false);
+        loadingCanvas.SetActive(false);
     }
 
     public void SceneChange(string sceneName)
@@ -89,6 +99,36 @@ public class SceneMng : Singleton<SceneMng>
             yield return null;
         }
         curScene = SceneManager.GetActiveScene();
+        SceneEnter?.Invoke(curScene.name);
+    }
+
+    protected override IEnumerator SwitchScene(SceneRef prevScene, SceneRef newScene, FinishedLoadingDelegate finished)
+    {
+        Debug.Log($"Switching Scene from {prevScene} to {newScene}");
+
+        SceneExit?.Invoke(curScene.name);
+
+        List<NetworkObject> sceneObjects = new List<NetworkObject>();
+
+        string path;
+        switch ((MapIndex)(int)newScene)
+        {
+            case MapIndex.Lobby: path = _lobby; break;
+            case MapIndex.Game: path = _game; break;
+            default: Debug.Log("Null Scene"); path = null; break;
+        }
+        yield return SceneManager.LoadSceneAsync(path, LoadSceneMode.Single);
+        var loadedScene = SceneManager.GetSceneByPath(path);
+        Debug.Log($"Loaded scene {path}: {loadedScene}");
+        sceneObjects = FindNetworkObjects(loadedScene, disable: false);
+
+        // Delay one frame
+        yield return null;
+        finished(sceneObjects);
+
+        Debug.Log($"Switched Scene from {prevScene} to {newScene} - loaded {sceneObjects.Count} scene objects");
+
+        curScene = loadedScene;
         SceneEnter?.Invoke(curScene.name);
     }
 }
