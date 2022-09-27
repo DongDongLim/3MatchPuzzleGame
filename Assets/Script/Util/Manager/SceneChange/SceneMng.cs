@@ -26,6 +26,7 @@ public class SceneMng : Singleton<SceneMng>
 
     GameObject loading;
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -35,8 +36,12 @@ public class SceneMng : Singleton<SceneMng>
         DeActiveLoadingScene(null);
         SceneExit = ActiveLoadingScene;
         SceneEnter = DeActiveLoadingScene;
+        
+    }
 
-
+    private void Start()
+    {
+        
     }
 
     void ActiveLoadingScene(string sceneName_Null)
@@ -57,7 +62,8 @@ public class SceneMng : Singleton<SceneMng>
 
     public void SceneChange(int sceneIndex)
     {
-        SceneChange(SceneManager.GetSceneByBuildIndex(sceneIndex).name);
+        iter = LoadYourAsyncScene(sceneIndex);
+        StartCoroutine(iter);
     }
 
     IEnumerator LoadYourAsyncScene(string sceneName)
@@ -66,10 +72,23 @@ public class SceneMng : Singleton<SceneMng>
         SceneExit?.Invoke(curScene.name);
         while (!asyncLoad.isDone)
         {
-            SceneMove?.Invoke(sceneName);
+            SceneMove?.Invoke(curScene.name);
             yield return null;
         }
         curScene = SceneManager.GetActiveScene();
         SceneEnter?.Invoke(sceneName);
+    }
+
+    IEnumerator LoadYourAsyncScene(int sceneIndex)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Single);
+        SceneExit?.Invoke(curScene.name);
+        while (!asyncLoad.isDone)
+        {
+            SceneMove?.Invoke(curScene.name);
+            yield return null;
+        }
+        curScene = SceneManager.GetActiveScene();
+        SceneEnter?.Invoke(curScene.name);
     }
 }
