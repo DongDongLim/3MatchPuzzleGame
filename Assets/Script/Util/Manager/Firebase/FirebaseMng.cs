@@ -34,8 +34,6 @@ public class FirebaseMng : Singleton<FirebaseMng>
                 string uid = user.UserId;
             }
 
-            SceneMng.instance.SceneChange(1);
-
         });
 
     }

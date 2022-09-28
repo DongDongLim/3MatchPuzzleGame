@@ -13,7 +13,7 @@ public class GoogleLogIn : MonoBehaviour, ISignIn
     {
         // 로그인 결과 받아오기 Todo Facebook SDK 문제 해결후 재활성화
         //PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-        SceneMng.instance.SceneChange(1);
+        
     }
 
 

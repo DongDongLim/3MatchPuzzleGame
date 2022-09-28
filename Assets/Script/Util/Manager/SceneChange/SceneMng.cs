@@ -118,9 +118,9 @@ public class SceneMng : NetworkSceneManagerBase
             default: Debug.Log("Null Scene"); path = null; break;
         }
         yield return SceneManager.LoadSceneAsync(path, LoadSceneMode.Single);
-        var loadedScene = SceneManager.GetSceneByPath(path);
-        Debug.Log($"Loaded scene {path}: {loadedScene}");
-        sceneObjects = FindNetworkObjects(loadedScene, disable: false);
+        curScene = SceneManager.GetSceneByPath(path);
+        Debug.Log($"Loaded scene {path}: {curScene}");
+        sceneObjects = FindNetworkObjects(curScene, disable: false);
 
         // Delay one frame
         yield return null;
@@ -128,7 +128,6 @@ public class SceneMng : NetworkSceneManagerBase
 
         Debug.Log($"Switched Scene from {prevScene} to {newScene} - loaded {sceneObjects.Count} scene objects");
 
-        curScene = loadedScene;
         SceneEnter?.Invoke(curScene.name);
     }
 }
