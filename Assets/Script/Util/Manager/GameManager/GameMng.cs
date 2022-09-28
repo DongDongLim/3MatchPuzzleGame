@@ -7,6 +7,10 @@ using UnityEngine;
 
 public class GameMng : Singleton<GameMng>, INetworkRunnerCallbacks
 {
+    [SerializeField]
+    private SceneReference _lobbyScene;
+
+
     public void OnConnectedToServer(NetworkRunner runner)
     {
         throw new NotImplementedException();
