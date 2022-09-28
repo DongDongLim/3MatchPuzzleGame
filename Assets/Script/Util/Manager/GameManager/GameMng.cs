@@ -4,12 +4,33 @@ using System.Threading.Tasks;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+// GameMng 라는 컴퍼넌트가 붙어있는 오브젝트에는 NetworkSceneManagerBase가 있어야한다는 것을 의미
+[RequireComponent(typeof(NetworkSceneManagerBase))]
 public class GameMng : Singleton<GameMng>, INetworkRunnerCallbacks
 {
     [SerializeField]
-    private SceneReference _lobbyScene;
+    private SceneReference _titleScene;
 
+    [SerializeField]
+    private GameObject _matchingUI;
+
+    [SerializeField]
+    private bool _autoConnect;
+
+    [SerializeField]
+    private bool _skipTitle;
+
+
+    private NetworkSceneManagerBase _sceneMng;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _sceneMng = GetComponent<NetworkSceneManagerBase>();
+        SceneManager.LoadSceneAsync(_titleScene);
+    }
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
